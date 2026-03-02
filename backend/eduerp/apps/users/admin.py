@@ -1,4 +1,5 @@
 from django.contrib import admin
+<<<<<<< Updated upstream
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, StudentProfile, TeacherProfile, ParentProfile, StudentParent
 
@@ -37,3 +38,7 @@ class StudentParentAdmin(admin.ModelAdmin):
     list_display = ('student', 'parent', 'relationship')
     list_filter = ('relationship',)
     raw_id_fields = ('student', 'parent',)
+=======
+
+# Register your models here.
+>>>>>>> Stashed changes
