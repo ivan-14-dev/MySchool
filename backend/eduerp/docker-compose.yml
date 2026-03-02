@@ -1,0 +1,57 @@
+# backend/docker-compose.yml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 --workers 3 config.wsgi:application
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.production
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=eduerp
+      - POSTGRES_USER=eduerp
+      - POSTGRES_PASSWORD=eduerp
+
+  redis:
+    image: redis:6-alpine
+
+  celery:
+    build: .
+    command: celery -A config.celery worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env.production
+    depends_on:
+      - redis
+      - db
+
+  celery-beat:
+    build: .
+    command: celery -A config.celery beat --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env.production
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
