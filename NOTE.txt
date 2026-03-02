@@ -1,0 +1,73 @@
+Project : EDUERP 
+
+#################################
+###########  Backend ############
+#################################
+
+   #############
+   dependencies: 
+
+     1. rest_framework :
+	Creation facile des api
+	Fournit : serializers, viewsets, routers, permissions, authentication
+     
+     2. rest_framework_simplejwt :
+	Permet d’utiliser JWT (JSON Web Tokens) pour l’authentification.
+	JWT token signer pour remplacer les sessions habituelle
+
+     3. rest_framework_simplejwt.tokenblacklist :
+	Extension de SimpleJWT qui permet de blacklister les refresh tokens.
+	Eviter qu'un refresh token soit valide jusqu'à son expration 	
+
+     4. corsheaders :
+	Gère le CORS (Cross-Origin Resource Sharing)
+	Gère les autorisations des urls pour les appels d'api avec Coresheaders.middleware.CorsMiddleware
+
+     5. django_filters : 
+	Permet de filtrer facilement les résultats d’une API.
+	
+     6. drf_yasg :
+	Génère automatiquement une documentation Swagger/OpenAPI.
+	Doc interactive à l’adresse /swagger/ ou /redoc/
+
+     7. celery : 
+	Gestionnaire de tâches asynchrones et planifiées
+	Envoie d'email, creation de pdf, changement de mots de passe, mise à jour d'information ....
+
+     8. channels
+	Chat en direct (EduERP Chat) ,Notifications en temps réel ,Suivi de présence
+
+   #####
+   apps:
+     
+     1. core : 
+	""" Modele inititiaux pour les autre applications"""
+      	%modèle : 
+	   - School: 
+	   - Department:
+	   - BaseModel: Gère le suivi les modifications sur des objet
+ 	%middleware :  # Gérer les differentes écoles en renvoyant les bonne informations pour les membres des l'ecole
+	   - MultiSchoolMiddleware:
+	%permissions : 
+	   - SchoolPermission : 
+			{
+				# has_permission 
+			 . verifier si c'est un super utilisateur
+			 . si l'utilisateur a une école
+		 	 . si autre permission spécifique				# 
+			} 
+	   - IsTeacher :
+	   - IsStudent :
+	   - IsParent :
+	   - HasPermission
+     2. authentification :
+	- auth/: content {login/ , register/ , logout/ , token/refresh/, verify-email/,password-reset/,password-reset-confirmation/ , change-password/}
+		* login :  data {email , password , access , refresh}
+
+
+##################################
+########### Frontend #############
+##################################
+	
+    
+    dependencies:

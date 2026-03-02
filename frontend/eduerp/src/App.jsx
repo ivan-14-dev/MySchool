@@ -14,6 +14,7 @@ import Finance from './pages/Finance';
 import Communication from './pages/Communication';
 import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
+import Extensions from './pages/Extensions';
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -55,7 +56,7 @@ function App() {
           <Route path="communication/*" element={<Communication />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="/extensions/*" element={<Extensions />} />
+          <Route path="extensions/*" element={<Extensions />} />
           <Route path="" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
